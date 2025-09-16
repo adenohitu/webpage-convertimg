@@ -1,12 +1,12 @@
 # WebPage Screenshot API
 
-WebページのスクリーンショットをPNG形式で撮影するシンプルなAPIサーバーです。
+Web ページのスクリーンショットを PNG 形式で撮影するシンプルな API サーバーです。
 
 ## 機能
 
-- 指定したURLのWebページのスクリーンショットを撮影
+- 指定した URL の Web ページのスクリーンショットを撮影
 - ウィンドウサイズをカスタマイズ可能
-- Docker環境で安定した動作
+- Docker 環境で安定した動作
 - 日本語フォント対応
 
 ## セットアップ
@@ -20,7 +20,7 @@ npm run dev
 
 サーバーが `http://localhost:3000` で起動します。
 
-### Docker環境（推奨）
+### Docker 環境（推奨）
 
 #### ローカルビルド
 
@@ -31,15 +31,15 @@ docker compose up -d
 #### GitHub Container Registry（GHCR）のイメージを使用
 
 ```bash
-docker run -d -p 3000:3000 ghcr.io/ri/webpage-convertimg:latest
+docker run -d -p 3000:3000 ghcr.io/adenohitu/webpage-convertimg:latest
 ```
 
-または、docker-compose.ymlを以下のように変更：
+または、docker-compose.yml を以下のように変更：
 
 ```yaml
 services:
   screenshot-api:
-    image: ghcr.io/ri/webpage-convertimg:latest
+    image: ghcr.io/adenohitu/webpage-convertimg:latest
     ports:
       - "3000:3000"
     environment:
@@ -49,9 +49,9 @@ services:
       - SYS_ADMIN
 ```
 
-Docker環境では安定したChromium環境とフォントが利用できます。
+Docker 環境では安定した Chromium 環境とフォントが利用できます。
 
-## API使用方法
+## API 使用方法
 
 ### エンドポイント
 
@@ -59,11 +59,11 @@ Docker環境では安定したChromium環境とフォントが利用できます
 
 ### リクエストパラメータ
 
-| パラメータ | 型 | 必須 | デフォルト | 説明 |
-|---|---|---|---|---|
-| `url` | string | ✓ | - | スクリーンショットを撮影するWebページのURL |
-| `width` | number | - | 1920 | ウィンドウの幅（px） |
-| `height` | number | - | 1080 | ウィンドウの高さ（px） |
+| パラメータ | 型     | 必須 | デフォルト | 説明                                          |
+| ---------- | ------ | ---- | ---------- | --------------------------------------------- |
+| `url`      | string | ✓    | -          | スクリーンショットを撮影する Web ページの URL |
+| `width`    | number | -    | 1920       | ウィンドウの幅（px）                          |
+| `height`   | number | -    | 1080       | ウィンドウの高さ（px）                        |
 
 ### 使用例
 
@@ -85,31 +85,31 @@ curl -X POST http://localhost:3000/screenshot \
   --output screenshot.png
 ```
 
-#### JavaScript/Node.jsでの使用例
+#### JavaScript/Node.js での使用例
 
 ```javascript
-const response = await fetch('http://localhost:3000/screenshot', {
-  method: 'POST',
+const response = await fetch("http://localhost:3000/screenshot", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    url: 'https://example.com',
+    url: "https://example.com",
     width: 1280,
-    height: 720
-  })
+    height: 720,
+  }),
 });
 
 const buffer = await response.arrayBuffer();
-const fs = require('fs');
-fs.writeFileSync('screenshot.png', Buffer.from(buffer));
+const fs = require("fs");
+fs.writeFileSync("screenshot.png", Buffer.from(buffer));
 ```
 
 ## レスポンス
 
-成功時はPNG形式の画像データを返します（Content-Type: image/png）。
+成功時は PNG 形式の画像データを返します（Content-Type: image/png）。
 
-エラー時はJSONでエラーメッセージを返します：
+エラー時は JSON でエラーメッセージを返します：
 
 ```json
 {
@@ -123,7 +123,7 @@ fs.writeFileSync('screenshot.png', Buffer.from(buffer));
 
 `Ctrl + C`でプロセスを停止
 
-### Docker環境
+### Docker 環境
 
 ```bash
 docker compose down
@@ -138,7 +138,7 @@ docker compose down
 
 ### イメージの場所
 
-GitHub Container Registry: `ghcr.io/ri/webpage-convertimg`
+GitHub Container Registry: `ghcr.io/adenohitu/webpage-convertimg`
 
 ### リリース方法
 
@@ -149,7 +149,7 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
-GitHub Actionsが自動的にマルチアーキテクチャ（AMD64/ARM64）のDockerイメージをビルドし、GHCRにプッシュします。
+GitHub Actions が自動的にマルチアーキテクチャ（AMD64/ARM64）の Docker イメージをビルドし、GHCR にプッシュします。
 
 ## 技術仕様
 
