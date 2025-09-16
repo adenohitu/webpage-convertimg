@@ -17,7 +17,21 @@ app.post('/screenshot', async (c) => {
       return c.json({ error: 'URL is required' }, 400)
     }
 
-    const browser = await puppeteer.launch()
+    const browser = await puppeteer.launch({
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--single-process',
+        '--disable-gpu',
+        '--font-render-hinting=none',
+        '--disable-font-subpixel-positioning'
+      ]
+    })
     const page = await browser.newPage()
 
     await page.setViewport({ width: parseInt(width), height: parseInt(height) })

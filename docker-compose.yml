@@ -1,0 +1,11 @@
+services:
+  screenshot-api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    # Security options for Chrome in container
+    cap_add:
+      - SYS_ADMIN
