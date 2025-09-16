@@ -29,10 +29,16 @@ app.post('/screenshot', async (c) => {
         '--single-process',
         '--disable-gpu',
         '--font-render-hinting=none',
-        '--disable-font-subpixel-positioning'
+        '--disable-font-subpixel-positioning',
+        '--lang=ja'
       ]
     })
     const page = await browser.newPage()
+
+    // Set Japanese locale
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8'
+    })
 
     await page.setViewport({ width: parseInt(width), height: parseInt(height) })
     await page.goto(url, { waitUntil: 'networkidle2' })
